@@ -6,16 +6,13 @@ const { t } = useI18n()
 const { init } = useToast()
 
 const token = useCookie('token')
-const api = useCookie('api')
 const version = useCookie('version')
 const lite = useCookie('lite')
 const docker = useCookie('docker-mode')
 const existAccount = useCookie<boolean>('exist-account')
 
-if (!api.value) api.value = 'http://127.0.0.1:2017/api/'
-
 if (existAccount.value === undefined) {
-  const { error } = await useFetch<any>(api.value + 'touch')
+  const { error } = await toFetch<any>('touch')
   existAccount.value = !error.value?.data.data.first
 }
 
@@ -27,7 +24,7 @@ if (!token.value) {
   }
 }
 
-const { data } = await useFetch<any>(api.value + 'version')
+const { data } = await toFetch<any>('version')
 
 if (data.value.code === 'SUCCESS') {
   docker.value = data.value.data.dockerMode
@@ -70,6 +67,8 @@ if (data.value.code === 'SUCCESS') {
 
 <template>
   <div>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

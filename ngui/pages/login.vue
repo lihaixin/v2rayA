@@ -4,7 +4,6 @@ const { init } = useToast()
 const router = useRouter()
 
 const token = useCookie('token')
-const api = useCookie('api')
 
 const username = ref('')
 const password = ref('')
@@ -19,7 +18,7 @@ if (token.value) {
 }
 
 async function login() {
-  const { data } = await useFetch<any>(api.value + 'login', {
+  const { data } = await toFetch<any>('login', {
     method: 'POST',
     body: {
       username: username.value,

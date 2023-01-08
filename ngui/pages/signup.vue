@@ -4,22 +4,20 @@ const { init } = useToast()
 const router = useRouter()
 
 const token = useCookie('token')
-const api = useCookie('api')
+const existAccount = useCookie<boolean>('exist-account')
 
 const username = ref('')
 const password = ref('')
 const focus = ref()
 
-onMounted(() => {
-  focus.value.focus()
-})
+onMounted(() => { focus.value.focus() })
 
 if (token.value) {
   router.push('/')
 }
 
 async function signup() {
-  const { data } = await useFetch<any>(api.value + 'account', {
+  const { data } = await toFetch<any>('account', {
     method: 'POST',
     body: {
       username: username.value,
@@ -34,6 +32,7 @@ async function signup() {
       duration: 5000
     })
   } else {
+    existAccount.value = true
     token.value = data.value.data.token
     router.push('/')
   }

@@ -5,17 +5,12 @@ const { data } = defineProps<{
   data: any[]
 }>()
 
-data.map(i => <any>{
-  servers: i.servers.length,
-  ...i
-})
-
 const columns = [
   { key: 'id', label: 'ID' },
-  { key: 'host', label: t('subscription.host') },
-  { key: 'info', label: t('subscription.remarks') },
-  { key: 'status', label: t('subscription.timeLastUpdate')  },
-  { key: 'number', label: t('subscription.numberServers') },
+  { key: 'name', label: t('server.name') },
+  { key: 'address', label: t('server.address') },
+  { key: 'net', label: t('server.protocol') },
+  { key: 'pingLatency', label: t('server.latency')  },
   { key: 'action', label: t('operations.name') },
 ]
 </script>
