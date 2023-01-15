@@ -1,37 +1,25 @@
 <script lang="ts" setup>
 const { t } = useI18n()
-const { init } = useToast()
 const router = useRouter()
 
 const token = useCookie('token')
 
-const username = ref('')
-const password = ref('')
+const username = $ref('')
+const password = $ref('')
 const focus = ref()
 
-onMounted(() => {
-  focus.value.focus()
-})
+onMounted(() => { focus.value.focus() })
 
-if (token.value) {
-  router.push('/')
-}
+if (token.value) router.push('/')
 
 async function login() {
   const { data } = await toFetch<any>('login', {
     method: 'POST',
-    body: {
-      username: username.value,
-      password: password.value,
-    }
+    body: { username, password }
   })
 
   if (data.value.code !== 'SUCCESS') {
-    init({
-      message: data.value.message,
-      color: 'warning',
-      duration: 5000,
-    })
+    ElMessage.warning({ message: data.value.message, duration: 5000 })
   } else {
     token.value = data.value.data.token
     router.push('/')
@@ -40,13 +28,22 @@ async function login() {
 </script>
 
 <template>
-  <div class="flex flex-col mx-auto w-96">
-    <VaForm class="flex flex-col space-y-2">
-      <h1 class="text-xl">{{ t('login.title') + ` - v2rayA` }}</h1>
-      <VaInput :label="t('login.username')" v-model="username" ref="focus" />
-      <VaInput :label="t('login.password')" v-model="password" type="password" />
-      <VaButton @click="login">{{ t("operations.login") }}</VaButton>
-    </VaForm>
+  <div class="mx-auto w-96">
+    <h1 class="text-2xl mb-6">{{ `${t('login.title')} - v2rayA` }}</h1>
+
+    <ElForm label-width="auto">
+      <ElFormItem :label="t('login.username')">
+        <ElInput ref="focus" v-model="username" />
+      </ElFormItem>
+
+      <ElFormItem :label="t('login.password')">
+        <ElInput v-model="password" type="password" show-password />
+      </ElFormItem>
+
+      <ElFormItem>
+        <ElButton type="primary" class="flex mx-auto" @click="login">{{ t("operations.login") }}</ElButton>
+      </ElFormItem>
+    </ElForm>
   </div>
 </template>
 

@@ -3,16 +3,13 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <VaNavbar color="primary" class="mb-3">
-    <template #left>
-      <VaNavbarItem>
-        <h1 class="text-lg font-bold">V2RayA</h1>
-      </VaNavbarItem>
-    </template>
-    <template #right>
-      <VaNavbarItem>{{ t('common.setting') }}</VaNavbarItem>
-      <VaNavbarItem>{{ t("common.log") }}</VaNavbarItem>
-      <VaNavbarItem>{{ t("common.about") }}</VaNavbarItem>
-    </template>
-  </VaNavbar>
+  <header class="p-4 flex justify-between">
+    <div class="text-large font-600 mr-3">V2RayA</div>
+
+    <div class="flex space-x-2">
+      <NuxtLink>{{ t('common.setting') }}</NuxtLink>
+      <NuxtLink>{{ t("common.log") }}</NuxtLink>
+      <NuxtLink>{{ t("common.about") }}</NuxtLink>
+    </div>
+  </header>
 </template>

@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { ToastOptions } from 'vuestic-ui'
+import { ElMessage, MessageParams } from 'element-plus'
 
 const router = useRouter()
 const { t } = useI18n()
-const { init } = useToast()
 
 const token = useCookie('token')
 const version = useCookie('version')
@@ -17,11 +16,10 @@ if (existAccount.value === undefined) {
 }
 
 if (!token.value) {
-  if (existAccount.value) {
+  if (existAccount.value)
     router.push('/login')
-  } else {
+  else
     router.push('/signup')
-  }
 }
 
 const { data } = await toFetch<any>('version')
@@ -31,37 +29,28 @@ if (data.value.code === 'SUCCESS') {
   version.value = data.value.data.version
   lite.value = data.value.data.lite
 
-  const toastConf: ToastOptions = {
+  let messageConf: MessageParams = {
     message: t(
       data.value.dockerMode ? 'welcome.docker' : 'welcome.default', {
         version: data.value.data.version
-    }),
-    duration: 3000,
+      }),
+    duration: 3000
   }
+
   if (data.value.data.foundNew) {
-    toastConf.duration = 5000
-    toastConf.message +=
-      '. ' + t('welcome.newVersion', {
-        version: data.value.data.remoteVersion
-      })
-    toastConf.color = 'success'
+    messageConf = {
+      duration: 5000,
+      type: 'success',
+      message: `${messageConf.message}. ${t('welcome.newVersion', { version: data.value.data.remoteVersion })}`
+    }
   }
 
-  init(toastConf)
+  ElMessage(messageConf)
 
-  if (data.value.data.serviceValid === false) {
-    init({
-      message: t('version.v2rayInvalid'),
-      color: 'danger',
-      duration: 10000,
-    })
-  } else if (!data.value.data.v5) {
-    init({
-      message: t('version.v2rayNotV5'),
-      color: 'danger',
-      duration: 10000,
-    })
-  }
+  if (data.value.data.serviceValid === false)
+    ElMessage.error({ message: t('version.v2rayInvalid'), duration: 10000 })
+  else if (!data.value.data.v5)
+    ElMessage.error({ message: t('version.v2rayNotV5'), duration: 10000 })
 }
 </script>
 

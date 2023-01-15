@@ -1,4 +1,6 @@
 <template>
   <Header />
-  <slot />
+  <div class="mx-6">
+    <slot />
+  </div>
 </template>

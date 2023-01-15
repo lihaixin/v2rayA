@@ -1,25 +1,22 @@
 <script lang="ts" setup>
 const { t } = useI18n()
 
-const { data } = defineProps<{
-  data: any[]
-}>()
-
-data.map(i => <any>{
-  servers: i.servers.length,
-  ...i
-})
+const { data } = defineProps<{ data: any[] }>()
 
 const columns = [
   { key: 'id', label: 'ID' },
   { key: 'host', label: t('subscription.host') },
   { key: 'info', label: t('subscription.remarks') },
-  { key: 'status', label: t('subscription.timeLastUpdate')  },
-  { key: 'number', label: t('subscription.numberServers') },
-  { key: 'action', label: t('operations.name') },
+  { key: 'status', label: t('subscription.timeLastUpdate') }
 ]
 </script>
 
 <template>
-    <VaDataTable :items="data" :columns="columns" selectable />
+  <ClientOnly>
+    <ElTable :data="data">
+      <ElTableColumn type="selection" width="55" />
+      <ElTableColumn v-for="c in columns" :key="c.key" :prop="c.key" :label="c.label" />
+      <ElTableColumn property="servers.length" :label="t('subscription.numberServers')" />
+    </ElTable>
+  </ClientOnly>
 </template>
