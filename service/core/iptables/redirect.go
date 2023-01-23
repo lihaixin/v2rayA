@@ -68,6 +68,7 @@ iptables -w 2 -t nat -A TP_RULE -d 198.51.100.0/24 -j RETURN
 iptables -w 2 -t nat -A TP_RULE -d 203.0.113.0/24 -j RETURN
 iptables -w 2 -t nat -A TP_RULE -d 224.0.0.0/4 -j RETURN
 iptables -w 2 -t nat -A TP_RULE -d 240.0.0.0/4 -j RETURN
+iptables -w 2 -t nat -A TP_RULE -d 255.255.255.255/32 -j RETURN
 iptables -w 2 -t nat -A TP_RULE -m mark --mark 0x80/0x80 -j RETURN
 iptables -w 2 -t nat -A TP_RULE -p tcp -j REDIRECT --to-ports 32345
 
@@ -172,7 +173,8 @@ table inet v2raya {
             192.168.0.0/16,
             198.51.100.0/24,
             203.0.113.0/24,
-            224.0.0.0/4
+            224.0.0.0/4,
+            255.255.255.255/32
         }
     }
 
