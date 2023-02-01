@@ -8,7 +8,7 @@ const TemplateJson = `
             "listen": "0.0.0.0",
             "protocol": "socks",
             "sniffing": {
-                "enabled": false,
+                "enabled": true,
                 "destOverride": [
                     "http",
                     "tls"
@@ -41,7 +41,7 @@ const TemplateJson = `
             "listen": "0.0.0.0",
             "protocol": "socks",
             "sniffing": {
-                "enabled": false,
+                "enabled": true,
                 "destOverride": [
                     "http",
                     "tls"
@@ -57,7 +57,7 @@ const TemplateJson = `
             "tag": "rule-socks"
         },
         {
-            "port": 20172,
+            "port": 0,
             "listen": "0.0.0.0",
             "protocol": "http",
             "sniffing": {
