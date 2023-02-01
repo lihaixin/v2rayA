@@ -50,7 +50,7 @@
         >
           <b-input
               v-model="table.socks5WithPac"
-              placeholder="0"
+              placeholder="20172"
               type="number"
               min="0"
               required
@@ -62,7 +62,7 @@
         >
           <b-input
             v-model="table.httpWithPac"
-            placeholder="0"
+            placeholder="20173"
             type="number"
             min="0"
             required
