@@ -62,7 +62,7 @@
         >
           <b-input
             v-model="table.httpWithPac"
-            placeholder="20172"
+            placeholder="0"
             type="number"
             min="0"
             required
